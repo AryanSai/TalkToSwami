@@ -1,0 +1,47 @@
+// import { Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+// import { useRouter } from 'expo-router';
+
+// export default function Index() {
+//   const router = useRouter();
+
+//   const handlePress = () => {
+//     router.push('/about');
+//   };
+
+//   return (
+//     <ImageBackground source={require('../assets/images/home_bg.jpg')} style={styles.background}>
+//         {/* <Text style={styles.text}>'నేను' అనే అహঙ্কారం పోవాలి.</Text> */}
+//         <TouchableOpacity style={styles.button} onPress={handlePress}>
+//           <Text style={styles.buttonText}>Talk to Swami</Text>
+//         </TouchableOpacity>
+//     </ImageBackground>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   background: {
+//     flex: 1,
+//     resizeMode: 'cover', // cover or contain
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   text: {
+//     color: '#fff',
+//     fontSize: 24,
+//     textAlign: 'center',
+//     fontWeight: 'bold',
+//     paddingHorizontal: 20,
+//   },
+//   button: {
+//     padding: 15,
+//     position: 'absolute',
+//     borderRadius: 5,
+//     bottom: '15%',
+//     backgroundColor: '#007bff',
+//   },
+//   buttonText: {
+//     color: '#fff',
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//   },
+// });
