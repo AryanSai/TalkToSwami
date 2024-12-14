@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,11 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
-  Linking, Platform,
+  Linking,
+  Platform,
   Share,
+  Modal,
+  FlatList,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -16,14 +19,21 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handler';
-import quotesData from '../assets/english.json';
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 
-const { width } = Dimensions.get('window');
+const languageQuotes = {
+  english: require('../assets/english.json'),
+  telugu: require('../assets/telugu.json'),
+  hindi: require('../assets/hindi.json'),
+  tamil: require('../assets/tamil.json'),
+  nepali: require('../assets/nepali.json'),
+};
 
-const APP_STORE_URL = 'https://apps.apple.com/app/idYOUR_APP_ID'; // Replace YOUR_APP_ID with your app's ID
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.gmail.aryanias3.talktoswamicopy&hl=en_IN'; // Replace YOUR_PACKAGE_NAME with your app's package name
+const { width, height } = Dimensions.get('window');
+
+const APP_STORE_URL = 'https://apps.apple.com/app/idYOUR_APP_ID';
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.gmail.aryanias3.talktoswamicopy&hl=en_IN';
 
 type Quote = {
   quote: string;
@@ -43,10 +53,23 @@ const categoryImages = {
   audio: require('../assets/images/icon.png'),
 };
 
+const LanguageStorage = {
+  currentLanguage: 'english',
+
+  getLanguage(): string {
+    return this.currentLanguage;
+  },
+
+  setLanguage(language: string): void {
+    this.currentLanguage = language;
+  }
+};
 
 const App: React.FC = () => {
   const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(LanguageStorage.getLanguage());
+  const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 
   const translateY = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -59,9 +82,10 @@ const App: React.FC = () => {
   }));
 
   const getRandomQuote = (): Quote => {
-    const categories = Object.keys(quotesData);
+    const quotesForSelectedLanguage = languageQuotes[selectedLanguage as keyof typeof languageQuotes];
+    const categories = Object.keys(quotesForSelectedLanguage);
     const selectedCategory = categories[Math.floor(Math.random() * categories.length)];
-    const selectedCategoryQuotes = quotesData[selectedCategory as keyof typeof quotesData] as string[];
+    const selectedCategoryQuotes = quotesForSelectedLanguage[selectedCategory as keyof typeof quotesForSelectedLanguage] as string[];
 
     const randomQuoteText = selectedCategoryQuotes[
       Math.floor(Math.random() * selectedCategoryQuotes.length)
@@ -83,23 +107,70 @@ const App: React.FC = () => {
     opacity.value = withSpring(1);
   };
 
+  const handleLanguageChange = (language: string) => {
+    LanguageStorage.setLanguage(language);
+
+    setSelectedLanguage(language);
+
+    setIsLanguageModalVisible(false);
+  };
+
+  const LanguageModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={isLanguageModalVisible}
+      onRequestClose={() => setIsLanguageModalVisible(false)}
+    >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <Text style={styles.modalTitle}>Select Language</Text>
+          <FlatList
+            data={Object.keys(languageQuotes)}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.languageItem}
+                onPress={() => handleLanguageChange(item)}
+              >
+                <Text style={styles.languageItemText}>
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </Text>
+                {selectedLanguage === item && (
+                  <FontAwesome name="check" size={20} color="green" />
+                )}
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item}
+          />
+          <TouchableOpacity
+            style={styles.modalCloseButton}
+            onPress={() => setIsLanguageModalVisible(false)}
+          >
+            <Text style={styles.modalCloseButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+
   const renderDrawerContent = () => (
     <View style={{ flex: 1 }}>
-      {/* Overlay to Close Drawer */}
       <TouchableOpacity
         style={StyleSheet.absoluteFillObject}
-        activeOpacity={1} // Prevent visual feedback
+        activeOpacity={1}
         onPress={() => drawerRef.current?.closeDrawer()}
       >
         <View pointerEvents="box-none" style={{ flex: 1 }}>
           <View style={styles.drawerContent}>
             <TouchableOpacity
               style={styles.drawerItem}
-              onPress={() => alert('Select Language: ')}
+              onPress={() => setIsLanguageModalVisible(true)}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="globe" size={24} color="black" />
-                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Language</Text>
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>
+                  Language: {selectedLanguage.charAt(0).toUpperCase() + selectedLanguage.slice(1)}
+                </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -124,7 +195,7 @@ const App: React.FC = () => {
                 }
               }}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="share-alt" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Share</Text>
               </View>
@@ -138,7 +209,7 @@ const App: React.FC = () => {
                 );
               }}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="star" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Rate us</Text>
               </View>
@@ -147,7 +218,7 @@ const App: React.FC = () => {
               style={styles.drawerItem}
               onPress={() => Linking.openURL('mailto:aryanias3@gmail.com')}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="envelope" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Write to us</Text>
               </View>
@@ -156,7 +227,7 @@ const App: React.FC = () => {
               style={styles.drawerItem}
               onPress={() => router.push('/about')}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="info-circle" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>About</Text>
               </View>
@@ -165,58 +236,57 @@ const App: React.FC = () => {
         </View>
         <Text style={styles.madeInTag}> Made with ❤️ in India 🇮🇳 </Text>
       </TouchableOpacity>
-
+      <LanguageModal />
     </View>
   );
 
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-        <DrawerLayout
-          ref={drawerRef}
-          drawerWidth={width} //set drawer width to full screen width
-          drawerPosition="left"
-          drawerType="front" // use 'front' to make it cover the screen
-          overlayColor="rgba(0, 0, 0, 0.4)" // semitransparent overlay
-          renderNavigationView={renderDrawerContent}
-          onDrawerOpen={() => setIsDrawerOpen(true)}
-          onDrawerClose={() => setIsDrawerOpen(false)}
-        >
-      <ImageBackground source={require('../assets/images/main_bg.jpg')} style={styles.background}>
-            <TouchableOpacity
-              style={styles.menuButton}
-              onPress={() => drawerRef.current?.openDrawer()}
-            >
-              <Text style={styles.menuButtonText}>☰</Text>
+      <DrawerLayout
+        ref={drawerRef}
+        drawerWidth={width}
+        drawerPosition="left"
+        drawerType="front"
+        overlayColor="rgba(0, 0, 0, 0.4)"
+        renderNavigationView={renderDrawerContent}
+        onDrawerOpen={() => setIsDrawerOpen(true)}
+        onDrawerClose={() => setIsDrawerOpen(false)}
+      >
+        <ImageBackground source={require('../assets/images/main_bg.jpg')} style={styles.background}>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={() => drawerRef.current?.openDrawer()}
+          >
+            <Text style={styles.menuButtonText}>☰</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.logo}>
+            <Image
+              source={require('../assets/images/icon.png')}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.screenshotButton}
+            onPress={() => alert('Screenshot')}
+          >
+            <Text style={styles.menuButtonText}>📷</Text>
+          </TouchableOpacity>
+          <View style={styles.container}>
+            <Animated.View style={[styles.card, animatedStyle]}>
+              {currentQuote && (
+                <>
+                  <Image source={currentQuote.image} style={styles.image} />
+                  <Text style={styles.quote}>{currentQuote.quote}</Text>
+                </>
+              )}
+            </Animated.View>
+            <TouchableOpacity style={styles.box} activeOpacity={0.7} onPress={handleCardPop}>
+              <Text style={styles.boxText}>Talk to Swami</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.logo}>
-              <Image
-                source={require('../assets/images/icon.png')}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.screenshotButton}
-              onPress={() => alert('Screenshot')}
-            >
-              <Text style={styles.menuButtonText}>📷</Text>
-            </TouchableOpacity>
-            <View style={styles.container}>
-              <Animated.View style={[styles.card, animatedStyle]}>
-                {currentQuote && (
-                  <>
-                    <Image source={currentQuote.image} style={styles.image} />
-                    <Text style={styles.quote}>{currentQuote.quote}</Text>
-                  </>
-                )}
-              </Animated.View>
-              <TouchableOpacity style={styles.box} activeOpacity={0.7} onPress={handleCardPop}>
-                <Text style={styles.boxText}>Talk to Swami</Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-        </DrawerLayout>
-    </GestureHandlerRootView >
+          </View>
+        </ImageBackground>
+      </DrawerLayout>
+    </GestureHandlerRootView>
   );
 };
 
@@ -299,8 +369,8 @@ const styles = StyleSheet.create({
     top: '2%',
     borderRadius: 5,
     zIndex: 10,
-    width: 50, // Replace with your desired width
-    height: 50, // Replace with your desired height
+    width: 50,
+    height: 50,
   },
   screenshotButton: {
     position: 'absolute',
@@ -328,6 +398,50 @@ const styles = StyleSheet.create({
   drawerItemText: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  // Modal styles
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    maxHeight: '60%',
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  languageItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  languageItemText: {
+    fontSize: 18,
+    color: '#333',
+  },
+  modalCloseButton: {
+    marginTop: 20,
+    backgroundColor: '#f0f0f0',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalCloseButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
 
