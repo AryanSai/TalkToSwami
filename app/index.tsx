@@ -17,10 +17,13 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  withTiming,
+  runOnJS,
 } from 'react-native-reanimated';
 import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 const languageQuotes = {
   english: require('../assets/english.json'),
@@ -28,6 +31,7 @@ const languageQuotes = {
   hindi: require('../assets/hindi.json'),
   tamil: require('../assets/tamil.json'),
   nepali: require('../assets/nepali.json'),
+  kannada: require('../assets/kannada.json'),
 };
 
 const { width, height } = Dimensions.get('window');
@@ -56,23 +60,35 @@ const categoryImages = {
 const LanguageStorage = {
   currentLanguage: 'english',
 
-  getLanguage(): string {
-    return this.currentLanguage;
+  async getLanguage(): Promise<string> {
+    try {
+      const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
+      return savedLanguage || this.currentLanguage; 
+    } catch (error) {
+      console.error('Failed to load language from storage:', error);
+      return this.currentLanguage;
+    }
   },
 
-  setLanguage(language: string): void {
-    this.currentLanguage = language;
-  }
+  async setLanguage(language: string): Promise<void> {
+    try {
+      await AsyncStorage.setItem('selectedLanguage', language); 
+      this.currentLanguage = language;
+    } catch (error) {
+      console.error('Failed to save language to storage:', error);
+    }
+  },
 };
 
 const App: React.FC = () => {
   const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(LanguageStorage.getLanguage());
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('english'); // Default language
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 
   const translateY = useSharedValue(0);
   const opacity = useSharedValue(0);
+  const cardVisible = useSharedValue(false);
 
   const drawerRef = useRef<DrawerLayout>(null);
 
@@ -80,6 +96,14 @@ const App: React.FC = () => {
     transform: [{ translateY: translateY.value }],
     opacity: opacity.value,
   }));
+
+  useEffect(() => {
+    const loadLanguage = async () => {
+      const savedLanguage = await LanguageStorage.getLanguage();
+      setSelectedLanguage(savedLanguage);
+    };
+    loadLanguage();
+  }, []);
 
   const getRandomQuote = (): Quote => {
     const quotesForSelectedLanguage = languageQuotes[selectedLanguage as keyof typeof languageQuotes];
@@ -105,14 +129,23 @@ const App: React.FC = () => {
 
     translateY.value = withSpring(0); // Animate to position
     opacity.value = withSpring(1);
+    cardVisible.value = true; // Mark card as visible
   };
 
-  const handleLanguageChange = (language: string) => {
-    LanguageStorage.setLanguage(language);
-
-    setSelectedLanguage(language);
-
-    setIsLanguageModalVisible(false);
+  const handleLanguageChange = async (language: string) => {
+    if (cardVisible.value) {
+      translateY.value = withTiming(200, { duration: 300 }, () => {
+        runOnJS(setCurrentQuote)(null); // Reset the card after animation
+        runOnJS(setSelectedLanguage)(language); // Update the language
+        runOnJS(setIsLanguageModalVisible)(false); // Close the modal
+      });
+      opacity.value = withTiming(0, { duration: 300 });
+      cardVisible.value = false; // Mark card as hidden
+    } else {
+      await LanguageStorage.setLanguage(language); // Save the selected language
+      setSelectedLanguage(language); // Update the selected language state
+      setIsLanguageModalVisible(false); // Close the modal
+    }
   };
 
   const LanguageModal = () => (
@@ -399,7 +432,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  // Modal styles
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
