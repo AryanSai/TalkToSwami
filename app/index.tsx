@@ -313,7 +313,13 @@ const App: React.FC = () => {
                 </>
               )}
             </Animated.View>
-            <TouchableOpacity style={styles.box} activeOpacity={0.7} onPress={handleCardPop}>
+            <TouchableOpacity
+              style={styles.box}
+              activeOpacity={0.7}
+              onPress={handleCardPop}
+              accessibilityLabel="Talk to Swami"
+              accessibilityRole="button"
+            >
               <Text style={styles.boxText}>Talk to Swami</Text>
             </TouchableOpacity>
           </View>
