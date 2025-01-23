@@ -23,7 +23,7 @@ import Animated, {
 import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const languageQuotes = {
   english: require('../assets/english.json'),
@@ -38,7 +38,7 @@ const { width, height } = Dimensions.get('window');
 
 const APP_STORE_URL = 'https://apps.apple.com/app/idYOUR_APP_ID';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.gmail.aryanias3.talktoswamicopy&hl=en_IN';
-
+const CHROME_URL = 'https://chromewebstore.google.com/detail/talk-to-swami/jjpebaigoamlglpipgcfhaedhckgjcmj?hl=en'
 type Quote = {
   quote: string;
   image: any;
@@ -63,7 +63,7 @@ const LanguageStorage = {
   async getLanguage(): Promise<string> {
     try {
       const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
-      return savedLanguage || this.currentLanguage; 
+      return savedLanguage || this.currentLanguage;
     } catch (error) {
       console.error('Failed to load language from storage:', error);
       return this.currentLanguage;
@@ -72,7 +72,7 @@ const LanguageStorage = {
 
   async setLanguage(language: string): Promise<void> {
     try {
-      await AsyncStorage.setItem('selectedLanguage', language); 
+      await AsyncStorage.setItem('selectedLanguage', language);
       this.currentLanguage = language;
     } catch (error) {
       console.error('Failed to save language to storage:', error);
@@ -209,7 +209,7 @@ const App: React.FC = () => {
             <TouchableOpacity
               style={styles.drawerItem}
               onPress={async () => {
-                const message = `Check out this amazing app!\n\nDownload it here:\n${APP_STORE_URL} and ${PLAY_STORE_URL}`;
+                const message = `✨ Sairam! Download the 'Talk to Swami' app for daily conversations with Bhagawan Sri Sathya Sai Baba. It's like a Chit Box on your phone—receive divine guidance and answers to your questions. Google Play Store: ${PLAY_STORE_URL}; IOS App Store: ${APP_STORE_URL}; Google Chrome Extension: ${CHROME_URL}`;
                 try {
                   const result = await Share.share({
                     message,
