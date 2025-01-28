@@ -24,6 +24,8 @@ import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handl
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import translations from '../assets/main.json';
+import useTranslation from "./transalation";
 
 const languageQuotes = {
   english: require('../assets/english.json'),
@@ -34,11 +36,21 @@ const languageQuotes = {
   kannada: require('../assets/kannada.json'),
 };
 
+const languageTranslationTags = {
+  english: "English",
+  telugu: "తెలుగు",
+  hindi: "हिन्दी",
+  tamil: "தமிழ்",
+  nepali: "नेपाली",
+  kannada: "ಕನ್ನಡ",
+};
+
 const { width, height } = Dimensions.get('window');
 
 const APP_STORE_URL = 'https://apps.apple.com/app/idYOUR_APP_ID';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.gmail.aryanias3.talktoswamicopy&hl=en_IN';
 const CHROME_URL = 'https://chromewebstore.google.com/detail/talk-to-swami/jjpebaigoamlglpipgcfhaedhckgjcmj?hl=en'
+
 type Quote = {
   quote: string;
   image: any;
@@ -85,6 +97,7 @@ const App: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('english'); // Default language
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
+  const translatedText = useTranslation(selectedLanguage);
 
   const translateY = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -157,16 +170,16 @@ const App: React.FC = () => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Select Language</Text>
+          <Text style={styles.modalTitle}>{translatedText.selectLanguage}</Text>
           <FlatList
-            data={Object.keys(languageQuotes)}
+            data={Object.keys(languageTranslationTags)}
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.languageItem}
                 onPress={() => handleLanguageChange(item)}
               >
                 <Text style={styles.languageItemText}>
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  {languageTranslationTags[item as keyof typeof languageTranslationTags]}
                 </Text>
                 {selectedLanguage === item && (
                   <FontAwesome name="check" size={20} color="green" />
@@ -179,7 +192,7 @@ const App: React.FC = () => {
             style={styles.modalCloseButton}
             onPress={() => setIsLanguageModalVisible(false)}
           >
-            <Text style={styles.modalCloseButtonText}>Close</Text>
+            <Text style={styles.modalCloseButtonText}>{translatedText.close}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -202,7 +215,7 @@ const App: React.FC = () => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="globe" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>
-                  Language: {selectedLanguage.charAt(0).toUpperCase() + selectedLanguage.slice(1)}
+                  {translatedText.selectLanguage} : {translatedText.lang}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -230,7 +243,7 @@ const App: React.FC = () => {
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="share-alt" size={24} color="black" />
-                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Share</Text>
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.share}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -244,7 +257,7 @@ const App: React.FC = () => {
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="star" size={24} color="black" />
-                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Rate us</Text>
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.rateUs}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -253,7 +266,7 @@ const App: React.FC = () => {
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="envelope" size={24} color="black" />
-                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>Write to us</Text>
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.writeToUs}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -262,12 +275,12 @@ const App: React.FC = () => {
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="info-circle" size={24} color="black" />
-                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>About</Text>
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.about}</Text>
               </View>
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={styles.madeInTag}> Made with ❤️ in India 🇮🇳 </Text>
+        <Text style={styles.madeInTag}> {translatedText.madeInIndia} </Text>
       </TouchableOpacity>
       <LanguageModal />
     </View>
@@ -317,10 +330,8 @@ const App: React.FC = () => {
               style={styles.box}
               activeOpacity={0.7}
               onPress={handleCardPop}
-              accessibilityLabel="Talk to Swami"
-              accessibilityRole="button"
             >
-              <Text style={styles.boxText}>Talk to Swami</Text>
+              <Text style={styles.boxText}>{translatedText.talktoswami}</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>

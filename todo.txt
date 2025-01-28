@@ -1,3 +1,2 @@
 screenshot option
-change app text based on the language
 language changing popup issue
