@@ -75,5 +75,16 @@
     "about": "О нас",
     "close": "Закрыть",
     "madeInIndia": "Сделано в Индии с ❤️ 🇮🇳"
+  },
+  "german": {
+    "lang": "Deutsch",
+    "talktoswami": "Sprich mit Swami",
+    "selectLanguage": "Sprache auswählen",
+    "share": "Teilen",
+    "rateUs": "Bewerte uns",
+    "writeToUs": "Schreib uns",
+    "about": "Über",
+    "close": "Schließen",
+    "madeInIndia": "Hergestellt mit ❤️ in Indien 🇮🇳"
   }
 }
