@@ -1,68 +1,79 @@
 {
-    "english": {
-      "lang":"English",
-      "talktoswami": "Talk to Swami",
-      "selectLanguage": "Select Language",
-      "share": "Share",
-      "rateUs": "Rate Us",
-      "writeToUs": "Write to Us",
-      "about": "About",
-      "close": "Close",
-      "madeInIndia": "Made with ❤️ in India 🇮🇳"
-    },
-    "telugu": {
-      "lang":"తెలుగు",
-      "talktoswami": "స్వామితో మాట్లాడండి",
-      "selectLanguage": "భాషను ఎంచుకోండి",
-      "share": "షేర్ చేయండి",
-      "rateUs": "రేట్ చేయండి",
-      "writeToUs": "మాకు రాయండి",
-      "about": "గురించి",
-      "close": "మూసివేయి",
-      "madeInIndia": "భారతదేశంలో ❤️ తో తయారు చేయబడింది 🇮🇳"
-    },
-    "hindi": {
-      "lang":"हिन्दी",
-      "talktoswami": "स्वामी से बात करें",
-      "selectLanguage": "भाषा चुनें",
-      "share": "शेयर करें",
-      "rateUs": "हमें रेट करें",
-      "writeToUs": "हमें लिखें",
-      "about": "हमारे बारे में",
-      "close": "बंद करें",
-      "madeInIndia": "भारत में ❤️ से बनाया गया 🇮🇳"
-    },
-    "tamil": {
-      "lang":"தமிழ்",
-      "talktoswami": "ஸ்வாமியுடன் பேசுங்கள்",
-      "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்",
-      "share": "பகிர்",
-      "rateUs": "எங்களை மதிப்பிடுங்கள்",
-      "writeToUs": "எங்களுக்கு எழுதுங்கள்",
-      "about": "எங்களைப் பற்றி",
-      "close": "மூடு",
-      "madeInIndia": "இந்தியாவில் ❤️ உருவாக்கப்பட்டது 🇮🇳"
-    },
-    "nepali": {
-      "lang":"नेपाली",
-      "talktoswami": "स्वामी संग कुरा गर्नुहोस्",
-      "selectLanguage": "भाषा चयन गर्नुहोस्",
-      "share": "सेयर गर्नुहोस्",
-      "rateUs": "हामीलाई मूल्याङ्कन गर्नुहोस्",
-      "writeToUs": "हामीलाई लेख्नुहोस्",
-      "about": "हाम्रो बारेमा",
-      "close": "बन्द गर्नुहोस्",
-      "madeInIndia": "भारतमा ❤️ ले बनाइएको 🇮🇳"
-    },
-    "kannada": {
-      "lang":"ಕನ್ನಡ",
-      "talktoswami": "ಸ್ವಾಮಿಯವರೊಂದಿಗೆ ಮಾತನಾಡಿ",
-      "selectLanguage": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
-      "share": "ಹಂಚಿಕೊಳ್ಳಿ",
-      "rateUs": "ನಮ್ಮನ್ನು ರೇಟ್ ಮಾಡಿ",
-      "writeToUs": "ನಮಗೆ ಬರೆಯಿರಿ",
-      "about": "ನಮ್ಮ ಬಗ್ಗೆ",
-      "close": "ಮುಚ್ಚಿ",
-      "madeInIndia": "ಭಾರತದಲ್ಲಿ ❤️ ನೊಂದಿಗೆ ಮಾಡಲಾಗಿದೆ 🇮🇳"
-    }
+  "english": {
+    "lang": "English",
+    "talktoswami": "Talk to Swami",
+    "selectLanguage": "Select Language",
+    "share": "Share",
+    "rateUs": "Rate Us",
+    "writeToUs": "Write to Us",
+    "about": "About",
+    "close": "Close",
+    "madeInIndia": "Made with ❤️ in India 🇮🇳"
+  },
+  "telugu": {
+    "lang": "తెలుగు",
+    "talktoswami": "స్వామితో మాట్లాడండి",
+    "selectLanguage": "భాషను ఎంచుకోండి",
+    "share": "షేర్ చేయండి",
+    "rateUs": "రేట్ చేయండి",
+    "writeToUs": "మాకు రాయండి",
+    "about": "గురించి",
+    "close": "మూసివేయి",
+    "madeInIndia": "భారతదేశంలో ❤️ తో తయారు చేయబడింది 🇮🇳"
+  },
+  "hindi": {
+    "lang": "हिन्दी",
+    "talktoswami": "स्वामी से बात करें",
+    "selectLanguage": "भाषा चुनें",
+    "share": "शेयर करें",
+    "rateUs": "रेट करें",
+    "writeToUs": "हमें लिखें",
+    "about": "हमारे बारे में",
+    "close": "बंद करें",
+    "madeInIndia": "भारत में ❤️ से बनाया गया 🇮🇳"
+  },
+  "tamil": {
+    "lang": "தமிழ்",
+    "talktoswami": "ஸ்வாமியுடன் பேசுங்கள்",
+    "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்",
+    "share": "பகிர்",
+    "rateUs": "எங்களை மதிப்பிடுங்கள்",
+    "writeToUs": "எங்களுக்கு எழுதுங்கள்",
+    "about": "எங்களைப் பற்றி",
+    "close": "மூடு",
+    "madeInIndia": "இந்தியாவில் ❤️ உருவாக்கப்பட்டது 🇮🇳"
+  },
+  "nepali": {
+    "lang": "नेपाली",
+    "talktoswami": "स्वामी संग कुरा गर्नुहोस्",
+    "selectLanguage": "भाषा चयन गर्नुहोस्",
+    "share": "सेयर गर्नुहोस्",
+    "rateUs": "हामीलाई मूल्याङ्कन गर्नुहोस्",
+    "writeToUs": "हामीलाई लेख्नुहोस्",
+    "about": "हाम्रो बारेमा",
+    "close": "बन्द गर्नुहोस्",
+    "madeInIndia": "भारतमा ❤️ ले बनाइएको 🇮🇳"
+  },
+  "kannada": {
+    "lang": "ಕನ್ನಡ",
+    "talktoswami": "ಸ್ವಾಮಿಯವರೊಂದಿಗೆ ಮಾತನಾಡಿ",
+    "selectLanguage": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    "share": "ಹಂಚಿಕೊಳ್ಳಿ",
+    "rateUs": "ನಮ್ಮನ್ನು ರೇಟ್ ಮಾಡಿ",
+    "writeToUs": "ನಮಗೆ ಬರೆಯಿರಿ",
+    "about": "ನಮ್ಮ ಬಗ್ಗೆ",
+    "close": "ಮುಚ್ಚಿ",
+    "madeInIndia": "ಭಾರತದಲ್ಲಿ ❤️ ನೊಂದಿಗೆ ಮಾಡಲಾಗಿದೆ 🇮🇳"
+  },
+  "russian": {
+    "lang": "Русский",
+    "talktoswami": "Поговорите со Свами",
+    "selectLanguage": "Выберите язык",
+    "share": "Поделиться",
+    "rateUs": "Оцените нас",
+    "writeToUs": "Напишите нам",
+    "about": "О нас",
+    "close": "Закрыть",
+    "madeInIndia": "Сделано в Индии с ❤️ 🇮🇳"
   }
+}

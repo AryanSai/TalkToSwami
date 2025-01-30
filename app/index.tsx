@@ -24,7 +24,6 @@ import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handl
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import translations from '../assets/main.json';
 import useTranslation from "./transalation";
 
 const languageQuotes = {
@@ -34,18 +33,20 @@ const languageQuotes = {
   tamil: require('../assets/tamil.json'),
   nepali: require('../assets/nepali.json'),
   kannada: require('../assets/kannada.json'),
+  russian: require('../assets/russian.json'),
 };
 
 const languageTranslationTags = {
   english: "English",
-  telugu: "తెలుగు",
-  hindi: "हिन्दी",
-  tamil: "தமிழ்",
-  nepali: "नेपाली",
-  kannada: "ಕನ್ನಡ",
+  telugu: "తెలుగు - Telugu",
+  hindi: "हिन्दी - Hindi",
+  tamil: "தமிழ் - Tamil",
+  nepali: "नेपाली - Nepali",
+  kannada: "ಕನ್ನಡ - Kannada",
+  russian: "русский - Russian"
 };
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const APP_STORE_URL = 'https://apps.apple.com/app/idYOUR_APP_ID';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.gmail.aryanias3.talktoswamicopy&hl=en_IN';
@@ -119,27 +120,24 @@ const App: React.FC = () => {
   }, []);
 
   const getRandomQuote = (): Quote => {
-    const quotesForSelectedLanguage = languageQuotes[selectedLanguage as keyof typeof languageQuotes];
-    const categories = Object.keys(quotesForSelectedLanguage);
+    const quotes = languageQuotes[selectedLanguage as keyof typeof languageQuotes];
+    const categories = Object.keys(quotes);
     const selectedCategory = categories[Math.floor(Math.random() * categories.length)];
-    const selectedCategoryQuotes = quotesForSelectedLanguage[selectedCategory as keyof typeof quotesForSelectedLanguage] as string[];
-
-    const randomQuoteText = selectedCategoryQuotes[
-      Math.floor(Math.random() * selectedCategoryQuotes.length)
+    const selectedQuotes = quotes[selectedCategory as keyof typeof quotes] as string[];
+    const quote = selectedQuotes[
+      Math.floor(Math.random() * selectedQuotes.length)
     ];
     return {
-      quote: randomQuoteText,
+      quote: quote,
       image: categoryImages[selectedCategory as keyof typeof categoryImages],
     };
   };
 
   const handleCardPop = () => {
-    const randomQuote = getRandomQuote();
-    setCurrentQuote(randomQuote);
-
+    const quote = getRandomQuote();
+    setCurrentQuote(quote);
     translateY.value = 200; // Start position
     opacity.value = 0;
-
     translateY.value = withSpring(0); // Animate to position
     opacity.value = withSpring(1);
     cardVisible.value = true; // Mark card as visible
