@@ -1,2 +1,3 @@
 screenshot option
 language changing popup issue
+put a welcome note on the sidebar "Sairam! Welcome to .." with logo
