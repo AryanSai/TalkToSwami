@@ -207,6 +207,13 @@ const App: React.FC = () => {
         onPress={() => drawerRef.current?.closeDrawer()}
       >
         <View pointerEvents="box-none" style={{ flex: 1 }}>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require('../assets/images/icon.png')}
+              style={styles.welcomeLogo}
+            />
+            <Text style={styles.welcomeText}>{translatedText.welcome}</Text>
+          </View>
           <View style={styles.drawerContent}>
             <TouchableOpacity
               style={styles.drawerItem}
@@ -341,6 +348,24 @@ const App: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  welcomeContainer: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  welcomeLogo: {
+    alignItems: 'center',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  welcomeText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
   background: {
     flex: 1,
     backgroundColor: '#fff7f7',

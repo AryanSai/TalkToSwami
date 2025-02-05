@@ -2,6 +2,7 @@
   "english": {
     "lang": "English",
     "talktoswami": "Talk to Swami",
+    "welcome": "Welcome to 'Talk to Swami'!",
     "selectLanguage": "Select Language",
     "share": "Share",
     "rateUs": "Rate Us",
@@ -13,6 +14,7 @@
   "telugu": {
     "lang": "తెలుగు",
     "talktoswami": "స్వామితో మాట్లాడండి",
+    "welcome": "'Talk to Swami' కి స్వాగతం!",
     "selectLanguage": "భాషను ఎంచుకోండి",
     "share": "షేర్ చేయండి",
     "rateUs": "రేట్ చేయండి",
@@ -24,6 +26,7 @@
   "hindi": {
     "lang": "हिन्दी",
     "talktoswami": "स्वामी से बात करें",
+    "welcome": "'Talk to Swami' में आपका स्वागत है!",
     "selectLanguage": "भाषा चुनें",
     "share": "शेयर करें",
     "rateUs": "रेट करें",
@@ -35,6 +38,7 @@
   "tamil": {
     "lang": "தமிழ்",
     "talktoswami": "ஸ்வாமியுடன் பேசுங்கள்",
+    "welcome": "'Talk to Swami'க்கு வரவேற்கிறோம்!",
     "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்",
     "share": "பகிர்",
     "rateUs": "எங்களை மதிப்பிடுங்கள்",
@@ -46,6 +50,7 @@
   "nepali": {
     "lang": "नेपाली",
     "talktoswami": "स्वामी संग कुरा गर्नुहोस्",
+    "welcome": "'Talk to Swami' मा स्वागत छ!",
     "selectLanguage": "भाषा चयन गर्नुहोस्",
     "share": "सेयर गर्नुहोस्",
     "rateUs": "हामीलाई मूल्याङ्कन गर्नुहोस्",
@@ -57,6 +62,7 @@
   "kannada": {
     "lang": "ಕನ್ನಡ",
     "talktoswami": "ಸ್ವಾಮಿಯವರೊಂದಿಗೆ ಮಾತನಾಡಿ",
+    "welcome": "'Talk to Swami' ಗೆ ಸ್ವಾಗತ!",
     "selectLanguage": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
     "share": "ಹಂಚಿಕೊಳ್ಳಿ",
     "rateUs": "ನಮ್ಮನ್ನು ರೇಟ್ ಮಾಡಿ",
@@ -68,6 +74,7 @@
   "russian": {
     "lang": "Русский",
     "talktoswami": "Поговорите со Свами",
+    "welcome": "Добро пожаловать в 'Talk to Swami'!",
     "selectLanguage": "Выберите язык",
     "share": "Поделиться",
     "rateUs": "Оцените нас",
@@ -79,6 +86,7 @@
   "german": {
     "lang": "Deutsch",
     "talktoswami": "Sprich mit Swami",
+    "welcome": "Willkommen bei 'Talk to Swami'!",
     "selectLanguage": "Sprache auswählen",
     "share": "Teilen",
     "rateUs": "Bewerte uns",
