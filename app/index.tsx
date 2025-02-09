@@ -285,6 +285,15 @@ const App: React.FC = () => {
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.about}</Text>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.drawerItem}
+              onPress={() => router.push('/new')}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FontAwesome name="info-circle" size={24} color="black" />
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>New</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <Text style={styles.madeInTag}> {translatedText.madeInIndia} </Text>
