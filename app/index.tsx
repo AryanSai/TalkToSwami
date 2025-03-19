@@ -22,9 +22,14 @@ import Animated, {
 } from 'react-native-reanimated';
 import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Octicons from '@expo/vector-icons/Octicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useTranslation from "./transalation";
+import { StatusBar } from 'react-native';
 
 const languageQuotes = {
   english: require('../assets/english.json'),
@@ -59,17 +64,18 @@ type Quote = {
   image: any;
 };
 
+// encouragement: require('../assets/images/icon.png'),
 const categoryImages = {
-  angry: require('../assets/images/icon.png'),
-  disappointed: require('../assets/images/icon.png'),
-  encouragement: require('../assets/images/icon.png'),
-  dont: require('../assets/images/icon.png'),
-  assurance: require('../assets/images/icon.png'),
-  appreciation: require('../assets/images/icon.png'),
-  quotes: require('../assets/images/icon.png'),
-  suggestions: require('../assets/images/icon.png'),
-  prayers: require('../assets/images/icon.png'),
-  audio: require('../assets/images/icon.png'),
+  angry: require('../assets/images/angry.jpeg'),
+  disappointed: require('../assets/images/disappointed.jpeg'),
+  encouragement: require('../assets/images/encouragement.png'),
+  dont: require('../assets/images/dont.jpg'),
+  assurance: require('../assets/images/assurance.png'),
+  appreciation: require('../assets/images/appreciation.png'),
+  quotes: require('../assets/images/quotes.png'),
+  suggestions: require('../assets/images/suggestions.png'),
+  prayers: require('../assets/images/prayer.jpg'),
+  audio: require('../assets/images/quotes.png'),
 };
 
 const LanguageStorage = {
@@ -182,7 +188,7 @@ const App: React.FC = () => {
                   {languageTranslationTags[item as keyof typeof languageTranslationTags]}
                 </Text>
                 {selectedLanguage === item && (
-                  <FontAwesome name="check" size={20} color="green" />
+                  <AntDesign name="checkcircleo" size={24} color="black" />
                 )}
               </TouchableOpacity>
             )}
@@ -220,7 +226,7 @@ const App: React.FC = () => {
               onPress={() => setIsLanguageModalVisible(true)}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="globe" size={24} color="black" />
+                <Ionicons name="language-sharp" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>
                   {translatedText.selectLanguage} : {translatedText.lang}
                 </Text>
@@ -249,7 +255,7 @@ const App: React.FC = () => {
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="share-alt" size={24} color="black" />
+                <MaterialCommunityIcons name="share-variant-outline" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.share}</Text>
               </View>
             </TouchableOpacity>
@@ -263,7 +269,7 @@ const App: React.FC = () => {
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="star" size={24} color="black" />
+                <MaterialIcons name="star-rate" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.rateUs}</Text>
               </View>
             </TouchableOpacity>
@@ -272,7 +278,7 @@ const App: React.FC = () => {
               onPress={() => Linking.openURL('mailto:aryanias3@gmail.com')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="envelope" size={24} color="black" />
+                <Octicons name="code-review" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.writeToUs}</Text>
               </View>
             </TouchableOpacity>
@@ -281,17 +287,8 @@ const App: React.FC = () => {
               onPress={() => router.push('/about')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="info-circle" size={24} color="black" />
+                <Ionicons name="information-circle-outline" size={24} color="black" />
                 <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>{translatedText.about}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.drawerItem}
-              onPress={() => router.push('/new')}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FontAwesome name="info-circle" size={24} color="black" />
-                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>New</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -304,22 +301,27 @@ const App: React.FC = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar
+        backgroundColor="#000" // For Android
+        barStyle="light-content"   // For iOS: 'light-content' or 'dark-content'
+        translucent={false}        // Optional: true if you want it overlapping content
+      />
       <DrawerLayout
         ref={drawerRef}
         drawerWidth={width}
         drawerPosition="left"
         drawerType="front"
-        overlayColor="rgba(0, 0, 0, 0.4)"
+        overlayColor="rgba(0, 0, 0, 0.1)"
         renderNavigationView={renderDrawerContent}
         onDrawerOpen={() => setIsDrawerOpen(true)}
         onDrawerClose={() => setIsDrawerOpen(false)}
       >
-        <ImageBackground source={require('../assets/images/main_bg.jpg')} style={styles.background}>
+        <ImageBackground source={require('../assets/images/floral.png')} style={styles.background}>
           <TouchableOpacity
             style={styles.menuButton}
             onPress={() => drawerRef.current?.openDrawer()}
           >
-            <Text style={styles.menuButtonText}>☰</Text>
+            <MaterialIcons name="menu-open" size={24} color="black" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.logo}>
             <Image
@@ -327,18 +329,20 @@ const App: React.FC = () => {
               style={{ width: '100%', height: '100%' }}
             />
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.screenshotButton}
             onPress={() => alert('Screenshot')}
           >
             <Text style={styles.menuButtonText}>📷</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.container}>
             <Animated.View style={[styles.card, animatedStyle]}>
               {currentQuote && (
                 <>
                   <Image source={currentQuote.image} style={styles.image} />
-                  <Text style={styles.quote}>{currentQuote.quote}</Text>
+                  <View style={styles.textcontainer}>
+                    <Text style={styles.quote}>{currentQuote.quote}</Text>
+                  </View>
                 </>
               )}
             </Animated.View>
@@ -358,7 +362,7 @@ const App: React.FC = () => {
 
 const styles = StyleSheet.create({
   welcomeContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(255, 255, 248)',
     alignItems: 'center',
     paddingVertical: 20,
     borderBottomWidth: 1,
@@ -368,7 +372,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 80,
     height: 80,
-    borderRadius: 40,
   },
   welcomeText: {
     fontSize: 22,
@@ -377,7 +380,7 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-    backgroundColor: '#fff7f7',
+    backgroundColor: '#e5e5e5',
     resizeMode: 'cover',
     justifyContent: 'center',
     alignItems: 'center',
@@ -390,42 +393,51 @@ const styles = StyleSheet.create({
   card: {
     width: '85%',
     height: '70%',
-    padding: 20,
-    backgroundColor: '#fff7f7',
-    borderRadius: 10,
+    // padding: 20,
+    backgroundColor: 'rgb(255, 255, 248)',
+    borderRadius: 20,
     alignItems: 'center',
     position: 'absolute',
     bottom: '20%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOpacity: 1,
+    shadowRadius: 20,
+    elevation: 10,
   },
   image: {
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     width: '100%',
-    height: '60%',
-    resizeMode: 'cover',
+    height: '70%',
+  },
+  textcontainer: {
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    width: '100%',
+    height: '35%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   quote: {
     textAlign: 'center',
     color: '#000',
     fontSize: 24,
     fontWeight: 'bold',
-    position: 'absolute',
-    bottom: '20%',
-    left: '10%',
-    right: '10%',
-    paddingLeft: 10,
-    paddingRight: 10,
   },
   box: {
-    backgroundColor: '#000',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     bottom: '5%',
     borderRadius: 10,
     marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 20,
+    elevation: 10,
   },
   madeInTag: {
     fontSize: 18,
@@ -434,7 +446,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   boxText: {
-    color: '#fff',
+    color: 'rgb(255, 255, 248)',
     fontSize: 22,
     fontWeight: 'bold',
     padding: 15,
@@ -443,10 +455,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '2%',
     left: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(255, 255, 248)',
     padding: 10,
     borderRadius: 5,
     zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 20,
+    elevation: 10,
   },
   logo: {
     position: 'absolute',
@@ -471,7 +488,7 @@ const styles = StyleSheet.create({
   },
   drawerContent: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(255, 255, 248)',
     padding: 20,
   },
   drawerItem: {

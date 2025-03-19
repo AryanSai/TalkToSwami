@@ -10,10 +10,10 @@ export default function AboutScreen() {
         />
         <Text style={styles.title}>About Talk to Swami</Text>
         <Text style={styles.description}>
-          The "Talk to Swami" application allows users to receive a divine message from Bhagawan Sri Sathya Sai Baba.
+          The "Talk to Swami" application allows devotees to receive a divine message from Bhagawan Sri Sathya Sai Baba.
           When the button is clicked, a message appears on the screen, offering guidance that can be seen as Swami’s answer to the question in your heart.
           Contemplating this message provides clarity and insight into your query.{"\n\n"}
-          The app draws inspiration from the "Chit Boxes" found in Swami's educational institutions, where devotees have long sought spiritual answers.
+          The app draws inspiration from the "Chit Boxes" found in Swami's educational institutions, where students have long sought spiritual answers.
         </Text>
 
       </View>

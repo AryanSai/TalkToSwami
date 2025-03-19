@@ -3,7 +3,7 @@
     "lang": "English",
     "talktoswami": "Talk to Swami",
     "welcome": "Welcome to 'Talk to Swami'!",
-    "selectLanguage": "Select Language",
+    "selectLanguage": "Choose Language",
     "share": "Share",
     "rateUs": "Rate Us",
     "writeToUs": "Write to Us",
@@ -18,8 +18,8 @@
     "selectLanguage": "భాషను ఎంచుకోండి",
     "share": "షేర్ చేయండి",
     "rateUs": "రేట్ చేయండి",
-    "writeToUs": "మాకు రాయండి",
-    "about": "గురించి",
+    "writeToUs": "అభిప్రాయం తెలపండి",
+    "about": "'Talk to Swami' గురించి",
     "close": "మూసివేయి",
     "madeInIndia": "భారతదేశంలో ❤️ తో తయారు చేయబడింది 🇮🇳"
   },
@@ -31,7 +31,7 @@
     "share": "शेयर करें",
     "rateUs": "रेट करें",
     "writeToUs": "हमें लिखें",
-    "about": "हमारे बारे में",
+    "about": "'Talk to Swami' बारे में",
     "close": "बंद करें",
     "madeInIndia": "भारत में ❤️ से बनाया गया 🇮🇳"
   },
