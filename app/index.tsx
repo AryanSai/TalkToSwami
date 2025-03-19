@@ -316,19 +316,17 @@ const App: React.FC = () => {
         onDrawerOpen={() => setIsDrawerOpen(true)}
         onDrawerClose={() => setIsDrawerOpen(false)}
       >
-        <ImageBackground source={require('../assets/images/floral.png')} style={styles.background}>
+        <ImageBackground source={require('../assets/images/new.png')} style={styles.background}>
           <TouchableOpacity
             style={styles.menuButton}
             onPress={() => drawerRef.current?.openDrawer()}
           >
             <MaterialIcons name="menu-open" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.logo}>
-            <Image
-              source={require('../assets/images/icon.png')}
-              style={{ width: '100%', height: '100%' }}
-            />
-          </TouchableOpacity>
+          {/* <Image
+            source={require('../assets/images/icon.png')}
+            style={styles.logo}
+          /> */}
           {/* <TouchableOpacity
             style={styles.screenshotButton}
             onPress={() => alert('Screenshot')}
@@ -393,11 +391,11 @@ const styles = StyleSheet.create({
   card: {
     width: '85%',
     height: '70%',
-    // padding: 20,
     backgroundColor: 'rgb(255, 255, 248)',
     borderRadius: 20,
     alignItems: 'center',
     position: 'absolute',
+    flexDirection: 'column',
     bottom: '20%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -412,10 +410,9 @@ const styles = StyleSheet.create({
     height: '70%',
   },
   textcontainer: {
+    flex: 1,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    width: '100%',
-    height: '35%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -454,7 +451,7 @@ const styles = StyleSheet.create({
   menuButton: {
     position: 'absolute',
     top: '2%',
-    left: 20,
+    left: '5%',
     backgroundColor: 'rgb(255, 255, 248)',
     padding: 10,
     borderRadius: 5,
@@ -468,6 +465,7 @@ const styles = StyleSheet.create({
   logo: {
     position: 'absolute',
     top: '2%',
+    right: 20,
     borderRadius: 5,
     zIndex: 10,
     width: 50,
@@ -476,7 +474,7 @@ const styles = StyleSheet.create({
   screenshotButton: {
     position: 'absolute',
     top: '2%',
-    right: 20,
+    right: '5%',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 5,

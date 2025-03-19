@@ -1,2 +1,0 @@
-screenshot option
-language changing popup issue

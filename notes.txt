@@ -1,3 +1,0 @@
-the quotes are also available in different languages in different jsons. there is a button for changing the language in the drawer. when that is clicked, the user should be able to change the language. remeber the language selected until it is changed to another. 
-
-add more code in this screen only to implement the features
