@@ -94,5 +94,17 @@
     "about": "Über",
     "close": "Schließen",
     "madeInIndia": "Hergestellt mit ❤️ in Indien 🇮🇳"
-  }
+  },
+  "italian": {
+    "lang": "Italiano",
+    "talktoswami": "Parla con Swami",
+    "welcome": "Benvenuto in 'Parla con Swami'!",
+    "selectLanguage": "Scegli la lingua",
+    "share": "Condividi",
+    "rateUs": "Valutaci",
+    "writeToUs": "Scrivici",
+    "about": "Informazioni",
+    "close": "Chiudi",
+    "madeInIndia": "Fatto con ❤️ in India 🇮🇳"
+}
 }

@@ -40,6 +40,7 @@ const languageQuotes = {
   kannada: require('../assets/kannada.json'),
   russian: require('../assets/russian.json'),
   german: require('../assets/german.json'),
+  italian: require('../assets/italian.json'),
 };
 
 const languageTranslationTags = {
@@ -50,7 +51,8 @@ const languageTranslationTags = {
   nepali: "नेपाली - Nepali",
   kannada: "ಕನ್ನಡ - Kannada",
   russian: "русский - Russian",
-  german: "Deutsch - German"
+  german: "Deutsch - German",
+  italian: "Italiano - Italian"
 };
 
 const { width } = Dimensions.get('window');
