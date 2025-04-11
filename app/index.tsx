@@ -152,22 +152,38 @@ const App: React.FC = () => {
     opacity.value = withSpring(1);
     cardVisible.value = true; // Mark card as visible
   };
-
   const handleLanguageChange = async (language: string) => {
     if (cardVisible.value) {
       translateY.value = withTiming(200, { duration: 300 }, () => {
-        runOnJS(setCurrentQuote)(null); // Reset the card after animation
-        runOnJS(setSelectedLanguage)(language); // Update the language
-        runOnJS(setIsLanguageModalVisible)(false); // Close the modal
+        runOnJS(setCurrentQuote)(null); // Reset the card
+        runOnJS(setSelectedLanguage)(language); // Update UI
+        runOnJS(LanguageStorage.setLanguage)(language); // ✅ Persist it!
+        runOnJS(setIsLanguageModalVisible)(false); // Close modal
       });
       opacity.value = withTiming(0, { duration: 300 });
-      cardVisible.value = false; // Mark card as hidden
+      cardVisible.value = false;
     } else {
-      await LanguageStorage.setLanguage(language); // Save the selected language
-      setSelectedLanguage(language); // Update the selected language state
-      setIsLanguageModalVisible(false); // Close the modal
+      await LanguageStorage.setLanguage(language); // ✅ Persist
+      setSelectedLanguage(language); // Update UI
+      setIsLanguageModalVisible(false); // Close modal
     }
   };
+
+  // const handleLanguageChange = async (language: string) => {
+  //   if (cardVisible.value) {
+  //     translateY.value = withTiming(200, { duration: 300 }, () => {
+  //       runOnJS(setCurrentQuote)(null); // Reset the card after animation
+  //       runOnJS(setSelectedLanguage)(language); // Update the language
+  //       runOnJS(setIsLanguageModalVisible)(false); // Close the modal
+  //     });
+  //     opacity.value = withTiming(0, { duration: 300 });
+  //     cardVisible.value = false; // Mark card as hidden
+  //   } else {
+  //     await LanguageStorage.setLanguage(language); // Save the selected language
+  //     setSelectedLanguage(language); // Update the selected language state
+  //     setIsLanguageModalVisible(false); // Close the modal
+  //   }
+  // };
 
   const LanguageModal = () => (
     <Modal
@@ -325,6 +341,7 @@ const App: React.FC = () => {
           >
             <MaterialIcons name="menu-open" size={24} color="black" />
           </TouchableOpacity>
+
           {/* <Image
             source={require('../assets/images/icon.png')}
             style={styles.logo}
@@ -351,7 +368,7 @@ const App: React.FC = () => {
               activeOpacity={0.7}
               onPress={handleCardPop}
             >
-              <Text style={styles.boxText}>{translatedText.talktoswami}</Text>
+              <Text style={styles.button}>{translatedText.talktoswami}</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -374,7 +391,7 @@ const styles = StyleSheet.create({
     height: 80,
   },
   welcomeText: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
   },
@@ -422,7 +439,7 @@ const styles = StyleSheet.create({
   quote: {
     textAlign: 'center',
     color: '#000',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   box: {
@@ -444,9 +461,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingBottom: 15,
   },
-  boxText: {
+  button: {
     color: 'rgb(255, 255, 248)',
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     padding: 15,
   },
@@ -483,7 +500,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   menuButtonText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   drawerContent: {
@@ -514,7 +531,7 @@ const styles = StyleSheet.create({
     maxHeight: '60%',
   },
   modalTitle: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,

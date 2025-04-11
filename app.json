@@ -10,7 +10,15 @@
     "splash": {
       "image": "./assets/images/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "rgb(0, 0, 0)"
+      "backgroundColor": "rgb(0, 0, 0)",
+      "ios": {
+        "image": "./assets/images/icon.png",
+        "backgroundColor": "rgb(0, 0, 0)"
+      },
+      "android": {
+        "image": "./assets/images/icon.png",
+        "backgroundColor": "rgb(0, 0, 0)"
+      }
     },
 
     "newArchEnabled": true,
@@ -34,9 +42,7 @@
       "favicon": "./assets/images/icon.png"
     },
 
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
 
     "experiments": {
       "typedRoutes": true
