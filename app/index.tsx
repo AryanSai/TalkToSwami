@@ -342,10 +342,13 @@ const App: React.FC = () => {
             <MaterialIcons name="menu-open" size={24} color="black" />
           </TouchableOpacity>
 
-          {/* <Image
-            source={require('../assets/images/icon.png')}
-            style={styles.logo}
-          /> */}
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../assets/images/icon.png')}
+              style={styles.logo}
+            />
+            <Text style={styles.logoText}>Talk to Swami</Text>
+          </View>
           {/* <TouchableOpacity
             style={styles.screenshotButton}
             onPress={() => alert('Screenshot')}
@@ -409,7 +412,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '85%',
-    height: '70%',
+    height: '67%',
     backgroundColor: 'rgb(255, 255, 248)',
     borderRadius: 20,
     alignItems: 'center',
@@ -481,14 +484,24 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 10,
   },
-  logo: {
+  logoContainer: {
     position: 'absolute',
-    top: '2%',
-    right: 20,
-    borderRadius: 5,
+    top: '1%',
+    left: '50%',
+    transform: [{ translateX: -50 }], // Half of the container width
+    alignItems: 'center',
     zIndex: 10,
+  },
+  logo: {
     width: 50,
     height: 50,
+    borderRadius: 5,
+  },
+  logoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 5,
+    color: 'black',
   },
   screenshotButton: {
     position: 'absolute',
