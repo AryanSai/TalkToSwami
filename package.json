@@ -22,6 +22,7 @@
     "@react-navigation/stack": "^7.0.18",
     "expo": "~52.0.17",
     "expo-blur": "~14.0.1",
+    "expo-capture": "^0.1.0",
     "expo-constants": "~17.0.3",
     "expo-dev-client": "~5.0.5",
     "expo-font": "~13.0.1",
