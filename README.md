@@ -1,50 +1,19 @@
-# Welcome to your Expo app 👋
+# Talk to Swami
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The "Talk to Swami" mobile application allows users to receive a divine message from Bhagawan Sri Sathya Sai Baba.
+          When the button is clicked, a message appears on the screen, offering guidance that can be seen as Swami’s answer to the question in your heart.
+          Contemplating this message provides clarity and insight into your query.
+          The app draws inspiration from the "Chit Boxes" found in Swami's educational institutions, where students have long sought spiritual answers.
 
-## Get started
+There is also a Chrome extension counterpart of this app, which is open-sourced at:
+🔗 https://github.com/AryanSai/Talk-to-Swami-Extension
 
-1. Install dependencies
+## Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-   ```bash
-   npm install
-   ```
+## Contact
+For any queries or suggestions, feel free to reach out:
 
-2. Start the app
+📧 **Email**: aryanias3@gmail.com, aryansaiarvapelly@gmail.com
 
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+🔗 **LinkedIn**: www.linkedin.com/in/aryansai
