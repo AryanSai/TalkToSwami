@@ -108,6 +108,8 @@ const App: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('english'); // Default language
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
+  const [fontSize, setFontSize] = useState(20); // Default to medium size
+  const [isFontSizeModalVisible, setIsFontSizeModalVisible] = useState(false);
   const translatedText = useTranslation(selectedLanguage);
 
   const translateY = useSharedValue(0);
@@ -168,6 +170,62 @@ const App: React.FC = () => {
       setIsLanguageModalVisible(false); // Close modal
     }
   };
+
+  const handleFontSizeChange = (size: number) => {
+    setFontSize(size);
+    setIsFontSizeModalVisible(false);
+  };
+
+  const FontSizeModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={isFontSizeModalVisible}
+      onRequestClose={() => setIsFontSizeModalVisible(false)}
+    >
+      <TouchableOpacity
+        style={styles.modalContainer}
+        activeOpacity={1}
+        onPress={() => setIsFontSizeModalVisible(false)}
+      >
+        <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
+          <Text style={styles.modalTitle}>{translatedText.fontSize}</Text>
+          <View style={styles.fontSizeModalButtons}>
+            <TouchableOpacity
+              style={[styles.fontSizeModalButton, fontSize === 16 && styles.selectedButton]}
+              onPress={() => handleFontSizeChange(16)}
+            >
+              <Text style={[styles.fontSizeModalButtonText, { fontSize: 16 }]}>
+                {translatedText.small}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.fontSizeModalButton, fontSize === 20 && styles.selectedButton]}
+              onPress={() => handleFontSizeChange(20)}
+            >
+              <Text style={[styles.fontSizeModalButtonText, { fontSize: 20 }]}>
+                {translatedText.medium}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.fontSizeModalButton, fontSize === 24 && styles.selectedButton]}
+              onPress={() => handleFontSizeChange(24)}
+            >
+              <Text style={[styles.fontSizeModalButtonText, { fontSize: 24 }]}>
+                {translatedText.large}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.modalCloseButton}
+            onPress={() => setIsFontSizeModalVisible(false)}
+          >
+            <Text style={styles.modalCloseButtonText}>{translatedText.close}</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </Modal>
+  );
 
   const LanguageModal = () => (
     <Modal
@@ -236,8 +294,29 @@ const App: React.FC = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.drawerItem}
+              onPress={() => setIsFontSizeModalVisible(true)}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <MaterialIcons name="format-size" size={24} color="black" />
+                <Text style={[styles.drawerItemText, { paddingLeft: 10 }]}>
+                  {translatedText.fontSize}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.drawerItem}
               onPress={async () => {
-                const message = `✨ Sairam! Download the 'Talk to Swami' app for daily conversations with Bhagawan Sri Sathya Sai Baba. It's like a Chit Box on your phone—receive divine guidance and answers to your questions. Google Play Store: ${PLAY_STORE_URL}; Google Chrome Extension: ${CHROME_URL}`;
+                const message = `❤️ Download Talk to Swami, a mobile application to receive a divine message from Bhagawan Sri Sathya Sai Baba with a single tap. Inspired by the Chit Boxes in Swami's Institutions, this app brings Swami's guidance to your fingertips — anytime, anywhere. 💫
+
+                🌍 Available in: English, తెలుగు, हिन्दी, தமிழ், नेपाली, ಕನ್ನಡ, русский, Deutsch, Italiano. Update now for a brand-new experience in your own language!
+
+                🔗 Google Play Store: ${PLAY_STORE_URL}
+
+                🖇️ Chrome Extension: {CHROME_URL}
+
+                📱 iOS version coming soon!
+
+                ✨ Like the app? Let His message reach more hearts. Share the app with the world! 💖`;
                 try {
                   const result = await Share.share({
                     message,
@@ -298,6 +377,7 @@ const App: React.FC = () => {
         <Text style={styles.madeInTag}> {translatedText.madeInIndia} </Text>
       </TouchableOpacity>
       <LanguageModal />
+      <FontSizeModal />
     </View>
   );
 
@@ -333,19 +413,19 @@ const App: React.FC = () => {
             />
             <Text style={styles.logoText}>Talk to Swami</Text>
           </View>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={styles.screenshotButton}
             onPress={() => alert('Screenshot')}
           >
-            <Text style={styles.menuButtonText}>📷</Text>
-          </TouchableOpacity> */}
+            <MaterialCommunityIcons name="share-outline" size={24} color="black" />
+          </TouchableOpacity>
           <View style={styles.container}>
             <Animated.View style={[styles.card, animatedStyle]}>
               {currentQuote && (
                 <>
                   <Image source={currentQuote.image} style={styles.image} />
                   <View style={styles.textcontainer}>
-                    <Text style={styles.quote}>{currentQuote.quote}</Text>
+                    <Text style={[styles.quote, { fontSize: fontSize }]}>{currentQuote.quote}</Text>
                   </View>
                 </>
               )}
@@ -426,7 +506,7 @@ const styles = StyleSheet.create({
   quote: {
     textAlign: 'center',
     color: '#000',
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   box: {
@@ -471,8 +551,6 @@ const styles = StyleSheet.create({
   logoContainer: {
     position: 'absolute',
     top: '1%',
-    left: '50%',
-    transform: [{ translateX: -50 }], // Half of the container width
     alignItems: 'center',
     zIndex: 10,
   },
@@ -488,13 +566,18 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   screenshotButton: {
+    right: '5%',
     position: 'absolute',
     top: '2%',
-    right: '5%',
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(255, 255, 248)',
     padding: 10,
     borderRadius: 5,
     zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 20,
+    elevation: 10,
   },
   menuButtonText: {
     fontSize: 18,
@@ -556,6 +639,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+  },
+  fontSizeModalButtons: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  fontSizeModalButton: {
+    backgroundColor: '#f0f0f0',
+    padding: 15,
+    borderRadius: 10,
+    minWidth: 120,
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  selectedButton: {
+    backgroundColor: '#e0e0e0',
+    borderWidth: 2,
+    borderColor: '#000',
+  },
+  fontSizeModalButtonText: {
+    fontWeight: 'bold',
   },
 });
 
