@@ -103,6 +103,28 @@ const LanguageStorage = {
   },
 };
 
+const FontSizeStorage = {
+  defaultSize: 20,
+
+  async getFontSize(): Promise<number> {
+    try {
+      const savedSize = await AsyncStorage.getItem('selectedFontSize');
+      return savedSize ? parseInt(savedSize, 10) : this.defaultSize;
+    } catch (error) {
+      console.error('Failed to load font size from storage:', error);
+      return this.defaultSize;
+    }
+  },
+
+  async setFontSize(size: number): Promise<void> {
+    try {
+      await AsyncStorage.setItem('selectedFontSize', size.toString());
+    } catch (error) {
+      console.error('Failed to save font size to storage:', error);
+    }
+  },
+};
+
 const App: React.FC = () => {
   const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -124,11 +146,15 @@ const App: React.FC = () => {
   }));
 
   useEffect(() => {
-    const loadLanguage = async () => {
-      const savedLanguage = await LanguageStorage.getLanguage();
+    const loadSettings = async () => {
+      const [savedLanguage, savedFontSize] = await Promise.all([
+        LanguageStorage.getLanguage(),
+        FontSizeStorage.getFontSize()
+      ]);
       setSelectedLanguage(savedLanguage);
+      setFontSize(savedFontSize);
     };
-    loadLanguage();
+    loadSettings();
   }, []);
 
   const getRandomQuote = (): Quote => {
@@ -171,8 +197,9 @@ const App: React.FC = () => {
     }
   };
 
-  const handleFontSizeChange = (size: number) => {
+  const handleFontSizeChange = async (size: number) => {
     setFontSize(size);
+    await FontSizeStorage.setFontSize(size);
     setIsFontSizeModalVisible(false);
   };
 
