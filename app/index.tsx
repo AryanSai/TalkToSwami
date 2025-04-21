@@ -339,7 +339,7 @@ const App: React.FC = () => {
 
                 🔗 Google Play Store: ${PLAY_STORE_URL}
 
-                🖇️ Chrome Extension: {CHROME_URL}
+                🖇️ Chrome Extension: ${CHROME_URL}
 
                 📱 iOS version coming soon!
 
