@@ -334,7 +334,7 @@ const App: React.FC = () => {
               style={styles.drawerItem}
               onPress={async () => {
                 const message = `❤️ Download Talk to Swami, a mobile application to receive a divine message from Bhagawan Sri Sathya Sai Baba with a single tap. Inspired by the Chit Boxes in Swami's Institutions, this app brings Swami's guidance to your fingertips — anytime, anywhere. 💫
-
+                
                 🌍 Available in: English, తెలుగు, हिन्दी, தமிழ், नेपाली, ಕನ್ನಡ, русский, Deutsch, Italiano. Update now for a brand-new experience in your own language!
 
                 🔗 Google Play Store: ${PLAY_STORE_URL}
@@ -400,8 +400,16 @@ const App: React.FC = () => {
               </View>
             </TouchableOpacity>
           </View>
+          <View style={styles.drawerFooter}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => drawerRef.current?.closeDrawer()}
+            >
+              <AntDesign name="close" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
         </View>
-        <Text style={styles.madeInTag}> {translatedText.madeInIndia} </Text>
+        <Text style={styles.madeInTag}>{translatedText.madeInIndia}</Text>
       </TouchableOpacity>
       <LanguageModal />
       <FontSizeModal />
@@ -472,6 +480,20 @@ const App: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  drawerFooter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(255, 255, 248)',
+  },
+  closeButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   welcomeContainer: {
     backgroundColor: 'rgb(255, 255, 248)',
     alignItems: 'center',
