@@ -30,6 +30,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useTranslation from "./translation";
 import { StatusBar } from 'react-native';
+import { captureRef } from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
 
 const languageQuotes = {
   english: require('../assets/english.json'),
@@ -102,6 +104,8 @@ const LanguageStorage = {
     }
   },
 };
+
+
 
 const FontSizeStorage = {
   defaultSize: 20,
@@ -202,6 +206,23 @@ const App: React.FC = () => {
     await FontSizeStorage.setFontSize(size);
     setIsFontSizeModalVisible(false);
   };
+
+  const shareQuote = async (viewRef: any) => {
+    if (cardVisible.value) {
+      try {
+        const uri = await captureRef(viewRef, {
+          format: 'png',
+          quality: 1
+        });
+        await Sharing.shareAsync(uri);
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      alert('No card to share!')
+    }
+  };
+
 
   const FontSizeModal = () => (
     <Modal
@@ -450,7 +471,7 @@ const App: React.FC = () => {
           </View>
           <TouchableOpacity
             style={styles.screenshotButton}
-            onPress={() => alert('Screenshot')}
+            onPress={() => shareQuote(drawerRef.current)}
           >
             <MaterialCommunityIcons name="share-outline" size={24} color="black" />
           </TouchableOpacity>
@@ -481,7 +502,7 @@ const App: React.FC = () => {
 
 const styles = StyleSheet.create({
   drawerFooter: {
-    flex: 1,
+    flex: 0.2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgb(255, 255, 248)',
