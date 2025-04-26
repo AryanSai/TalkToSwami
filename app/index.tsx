@@ -12,6 +12,8 @@ import {
   Share,
   Modal,
   FlatList,
+  BackHandler,
+  Alert,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -105,8 +107,6 @@ const LanguageStorage = {
   },
 };
 
-
-
 const FontSizeStorage = {
   defaultSize: 20,
 
@@ -161,6 +161,43 @@ const App: React.FC = () => {
     loadSettings();
   }, []);
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (isDrawerOpen) {
+        drawerRef.current?.closeDrawer();
+        return true;
+      }
+
+      if (cardVisible.value) {
+        // Animate card away when back is pressed
+        translateY.value = withTiming(200, { duration: 300 }, () => {
+          runOnJS(setCurrentQuote)(null);
+        });
+        opacity.value = withTiming(0, { duration: 300 });
+        cardVisible.value = false;
+        return true;
+      } else {
+        // Show exit confirmation when no card is visible
+        Alert.alert(
+          translatedText.exitTitle || 'Exit App',
+          translatedText.exitMessage || 'Do you want to exit the app?',
+          [
+            {
+              text: translatedText.exitNo || 'No',
+              style: 'cancel'
+            },
+            {
+              text: translatedText.exitYes || 'Yes',
+              onPress: () => BackHandler.exitApp()
+            }
+          ]
+        );
+        return true;
+      }
+    });
+
+    return () => backHandler.remove();
+  }, [isDrawerOpen, cardVisible.value, translatedText]);
   const getRandomQuote = (): Quote => {
     const quotes = languageQuotes[selectedLanguage as keyof typeof languageQuotes];
     const categories = Object.keys(quotes);
@@ -453,6 +490,7 @@ const App: React.FC = () => {
         renderNavigationView={renderDrawerContent}
         onDrawerOpen={() => setIsDrawerOpen(true)}
         onDrawerClose={() => setIsDrawerOpen(false)}
+        enableTrackpadTwoFingerGesture
       >
         <ImageBackground source={require('../assets/images/new.png')} style={styles.background}>
           <TouchableOpacity

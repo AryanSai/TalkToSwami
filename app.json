@@ -2,7 +2,7 @@
   "expo": {
     "name": "Talk to Swami",
     "slug": "TalktoSwami",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",

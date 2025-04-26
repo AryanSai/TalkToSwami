@@ -13,7 +13,11 @@
     "fontSize": "Font Size",
     "small": "Small",
     "medium": "Medium",
-    "large": "Large"
+    "large": "Large",
+    "exitTitle": "Exit",
+    "exitMessage": "Are you sure you want to exit?",
+    "exitYes": "Yes",
+    "exitNo": "No"
   },
   "telugu": {
     "lang": "తెలుగు",
@@ -29,7 +33,11 @@
     "fontSize": "అక్షర పరిమాణం",
     "small": "చిన్న",
     "medium": "మధ్యస్థ",
-    "large": "పెద్ద"
+    "large": "పెద్ద",
+    "exitTitle": "నిష్క్రమించు",
+    "exitMessage": "మీరు నిష్క్రమించాలనుకుంటున్నారా?",
+    "exitYes": "అవును",
+    "exitNo": "కాదు"
   },
   "hindi": {
     "lang": "हिन्दी",
@@ -45,7 +53,11 @@
     "fontSize": "फ़ॉन्ट आकार",
     "small": "छोटा",
     "medium": "मध्यम",
-    "large": "बड़ा"
+    "large": "बड़ा",
+    "exitTitle": "बाहर निकलें",
+    "exitMessage": "क्या आप बाहर निकलना चाहते हैं?",
+    "exitYes": "हाँ",
+    "exitNo": "नहीं"
   },
   "tamil": {
     "lang": "தமிழ்",
@@ -61,7 +73,11 @@
     "fontSize": "எழுத்துரு அளவு",
     "small": "சிறிய",
     "medium": "நடுத்தர",
-    "large": "பெரிய"
+    "large": "பெரிய",
+    "exitTitle": "வெளியேறு",
+    "exitMessage": "நீங்கள் வெளியேற விரும்பதா?",
+    "exitYes": "ஆம்",
+    "exitNo": "இல்லை"
   },
   "nepali": {
     "lang": "नेपाली",
@@ -77,7 +93,11 @@
     "fontSize": "फन्ट साइज",
     "small": "सानो",
     "medium": "मध्यम",
-    "large": "ठूलो"
+    "large": "ठूलो",
+    "exitTitle": "बाहिर निस्कनुहोस्",
+    "exitMessage": "के तपाई बाहिर जान चाहनुहुन्छ?",
+    "exitYes": "हो",
+    "exitNo": "होइन"
   },
   "kannada": {
     "lang": "ಕನ್ನಡ",
@@ -93,7 +113,11 @@
     "fontSize": "ಅಕ್ಷರದ ಗಾತ್ರ",
     "small": "ಸಣ್ಣ",
     "medium": "ಮಧ್ಯಮ",
-    "large": "ದೊಡ್ಡ"
+    "large": "ದೊಡ್ಡ",
+    "exitTitle": "ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ",
+    "exitMessage": "ನೀವು ನಿಷ್ಕ್ರಿಯಗೊಳ್ಳಲು ಬಯಸುತ್ತೀರಾ?",
+    "exitYes": "ಹೌದು",
+    "exitNo": "ಇಲ್ಲ"
   },
   "russian": {
     "lang": "Русский",
@@ -109,7 +133,11 @@
     "fontSize": "Размер шрифта",
     "small": "Маленький",
     "medium": "Средний",
-    "large": "Большой"
+    "large": "Большой",
+    "exitTitle": "Выход",
+    "exitMessage": "Вы уверены, что хотите выйти?",
+    "exitYes": "Да",
+    "exitNo": "Нет"
   },
   "german": {
     "lang": "Deutsch",
@@ -125,7 +153,11 @@
     "fontSize": "Schriftgröße",
     "small": "Klein",
     "medium": "Mittel",
-    "large": "Groß"
+    "large": "Groß",
+    "exitTitle": "Ausgang",
+    "exitMessage": "Möchten Sie wirklich beenden?",
+    "exitYes": "Ja",
+    "exitNo": "Nein"
   },
   "italian": {
     "lang": "Italiano",
@@ -141,6 +173,10 @@
     "fontSize": "Dimensione carattere",
     "small": "Piccolo",
     "medium": "Medio",
-    "large": "Grande"
+    "large": "Grande",
+    "exitTitle": "Uscita",
+    "exitMessage": "Sei sicuro di voler uscire?",
+    "exitYes": "Sì",
+    "exitNo": "No"
   }
 }
