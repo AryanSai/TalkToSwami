@@ -1,0 +1,12 @@
+android {
+    namespace "com.talktoswami"
+    compileSdkVersion 35
+    
+    defaultConfig {
+        applicationId "com.talktoswami"
+        minSdkVersion 21
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0.0"
+    }
+}
