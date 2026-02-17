@@ -26,7 +26,7 @@ export default function AboutScreen() {
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <AntDesign name="back" size={24} color="black" />
+            <AntDesign name="arrow-left" size={24} color="black" />
           </TouchableOpacity>
           <Image
             source={require('../assets/images/icon.png')} // Adjust the image path as needed

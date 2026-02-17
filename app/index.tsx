@@ -84,23 +84,23 @@ const categoryImages = {
   audio: require('../assets/images/quotes.png'),
 };
 
-const LanguageStorage = {
-  currentLanguage: 'english',
+let currentLanguage = 'english';
 
+const LanguageStorage = {
   async getLanguage(): Promise<string> {
     try {
       const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
-      return savedLanguage || this.currentLanguage;
+      return savedLanguage || currentLanguage;
     } catch (error) {
       console.error('Failed to load language from storage:', error);
-      return this.currentLanguage;
+      return currentLanguage;
     }
   },
 
   async setLanguage(language: string): Promise<void> {
     try {
       await AsyncStorage.setItem('selectedLanguage', language);
-      this.currentLanguage = language;
+      currentLanguage = language;
     } catch (error) {
       console.error('Failed to save language to storage:', error);
     }
@@ -197,7 +197,7 @@ const App: React.FC = () => {
     });
 
     return () => backHandler.remove();
-  }, [isDrawerOpen, cardVisible.value, translatedText]);
+  }, [isDrawerOpen, translatedText]);
   const getRandomQuote = (): Quote => {
     const quotes = languageQuotes[selectedLanguage as keyof typeof languageQuotes];
     const categories = Object.keys(quotes);
@@ -333,7 +333,7 @@ const App: React.FC = () => {
                   {languageTranslationTags[item as keyof typeof languageTranslationTags]}
                 </Text>
                 {selectedLanguage === item && (
-                  <AntDesign name="checkcircleo" size={24} color="black" />
+                  <AntDesign name="check-circle" size={24} color="black" />
                 )}
               </TouchableOpacity>
             )}
