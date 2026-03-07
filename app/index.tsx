@@ -15,6 +15,7 @@ import {
   BackHandler,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -22,7 +23,7 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import { DrawerLayout, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -141,12 +142,20 @@ const App: React.FC = () => {
   const translateY = useSharedValue(0);
   const opacity = useSharedValue(0);
   const cardVisible = useSharedValue(false);
-
-  const drawerRef = useRef<DrawerLayout>(null);
+  const drawerTranslateX = useSharedValue(-width);
+  const overlayOpacity = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
     opacity: opacity.value,
+  }));
+
+  const animatedDrawerStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: drawerTranslateX.value }],
+  }));
+
+  const animatedOverlayStyle = useAnimatedStyle(() => ({
+    opacity: overlayOpacity.value,
   }));
 
   useEffect(() => {
@@ -164,7 +173,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (isDrawerOpen) {
-        drawerRef.current?.closeDrawer();
+        handleCloseDrawer();
         return true;
       }
 
@@ -221,6 +230,19 @@ const App: React.FC = () => {
     opacity.value = withSpring(1);
     cardVisible.value = true; // Mark card as visible
   };
+
+  const handleOpenDrawer = () => {
+    setIsDrawerOpen(true);
+    drawerTranslateX.value = withTiming(0, { duration: 300 });
+    overlayOpacity.value = withTiming(1, { duration: 300 });
+  };
+
+  const handleCloseDrawer = () => {
+    drawerTranslateX.value = withTiming(-width, { duration: 300 }, () => {
+      runOnJS(setIsDrawerOpen)(false);
+    });
+    overlayOpacity.value = withTiming(0, { duration: 300 });
+  };
   const handleLanguageChange = async (language: string) => {
     if (cardVisible.value) {
       translateY.value = withTiming(200, { duration: 300 }, () => {
@@ -247,6 +269,12 @@ const App: React.FC = () => {
   const shareQuote = async (viewRef: any) => {
     if (cardVisible.value) {
       try {
+        // Fallback for web or if native module is missing (New Arch issue)
+        if (Platform.OS === 'web') {
+          alert('Sharing is not supported on web yet.');
+          return;
+        }
+
         const uri = await captureRef(viewRef, {
           format: 'png',
           quality: 1
@@ -254,6 +282,7 @@ const App: React.FC = () => {
         await Sharing.shareAsync(uri);
       } catch (error) {
         console.error('Error sharing:', error);
+        alert('Could not capture screen for sharing. Please try again.');
       }
     } else {
       alert('No card to share!')
@@ -355,7 +384,7 @@ const App: React.FC = () => {
       <TouchableOpacity
         style={StyleSheet.absoluteFillObject}
         activeOpacity={1}
-        onPress={() => drawerRef.current?.closeDrawer()}
+        onPress={handleCloseDrawer}
       >
         <View pointerEvents="box-none" style={{ flex: 1 }}>
           <View style={styles.welcomeContainer}>
@@ -461,7 +490,7 @@ const App: React.FC = () => {
           <View style={styles.drawerFooter}>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => drawerRef.current?.closeDrawer()}
+              onPress={handleCloseDrawer}
             >
               <AntDesign name="close" size={24} color="white" />
             </TouchableOpacity>
@@ -477,25 +506,16 @@ const App: React.FC = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar
-        backgroundColor="#000" // For Android
-        barStyle="light-content"   // For iOS: 'light-content' or 'dark-content'
-        translucent={false}        // Optional: true if you want it overlapping content
+        backgroundColor="black"
+        barStyle="light-content"
+        translucent={false}
       />
-      <DrawerLayout
-        ref={drawerRef}
-        drawerWidth={width}
-        drawerPosition="left"
-        drawerType="front"
-        overlayColor="rgba(0, 0, 0, 0.1)"
-        renderNavigationView={renderDrawerContent}
-        onDrawerOpen={() => setIsDrawerOpen(true)}
-        onDrawerClose={() => setIsDrawerOpen(false)}
-        enableTrackpadTwoFingerGesture
-      >
-        <ImageBackground source={require('../assets/images/new.png')} style={styles.background}>
+
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+        <ImageBackground source={require('../assets/images/new.png')} style={[styles.background, { backgroundColor: '#e5e5e5' }]}>
           <TouchableOpacity
             style={styles.menuButton}
-            onPress={() => drawerRef.current?.openDrawer()}
+            onPress={handleOpenDrawer}
           >
             <MaterialIcons name="menu-open" size={24} color="black" />
           </TouchableOpacity>
@@ -509,7 +529,6 @@ const App: React.FC = () => {
           </View>
           <TouchableOpacity
             style={styles.screenshotButton}
-            onPress={() => shareQuote(drawerRef.current)}
           >
             <MaterialCommunityIcons name="share-outline" size={24} color="black" />
           </TouchableOpacity>
@@ -533,7 +552,41 @@ const App: React.FC = () => {
             </TouchableOpacity>
           </View>
         </ImageBackground>
-      </DrawerLayout>
+      </SafeAreaView>
+
+      {/* Custom Drawer Implementation */}
+      {isDrawerOpen && (
+        <Animated.View style={[StyleSheet.absoluteFill, { zIndex: 1000 }]}>
+          <Animated.View
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: 'rgba(0,0,0,0.5)' },
+              animatedOverlayStyle
+            ]}
+          >
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              onPress={handleCloseDrawer}
+              activeOpacity={1}
+            />
+          </Animated.View>
+          <Animated.View
+            style={[
+              {
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                width: width,
+                backgroundColor: 'white'
+              },
+              animatedDrawerStyle
+            ]}
+          >
+            {renderDrawerContent()}
+          </Animated.View>
+        </Animated.View>
+      )}
     </GestureHandlerRootView>
   );
 };
