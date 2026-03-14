@@ -131,6 +131,7 @@ const FontSizeStorage = {
 };
 
 const App: React.FC = () => {
+  const screenRef = useRef<View>(null);
   const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('english'); // Default language
@@ -511,7 +512,7 @@ const App: React.FC = () => {
         translucent={false}
       />
 
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+      <SafeAreaView ref={screenRef} style={{ flex: 1, backgroundColor: 'black' }}>
         <ImageBackground source={require('../assets/images/new.png')} style={[styles.background, { backgroundColor: '#e5e5e5' }]}>
           <TouchableOpacity
             style={styles.menuButton}
@@ -529,6 +530,7 @@ const App: React.FC = () => {
           </View>
           <TouchableOpacity
             style={styles.screenshotButton}
+            onPress={() => shareQuote(screenRef)}
           >
             <MaterialCommunityIcons name="share-outline" size={24} color="black" />
           </TouchableOpacity>
