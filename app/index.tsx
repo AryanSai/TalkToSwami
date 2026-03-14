@@ -85,23 +85,22 @@ const categoryImages = {
   audio: require('../assets/images/quotes.png'),
 };
 
-let currentLanguage = 'english';
+const DEFAULT_LANGUAGE = 'english';
 
 const LanguageStorage = {
   async getLanguage(): Promise<string> {
     try {
       const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
-      return savedLanguage || currentLanguage;
+      return savedLanguage || DEFAULT_LANGUAGE;
     } catch (error) {
       console.error('Failed to load language from storage:', error);
-      return currentLanguage;
+      return DEFAULT_LANGUAGE;
     }
   },
 
   async setLanguage(language: string): Promise<void> {
     try {
       await AsyncStorage.setItem('selectedLanguage', language);
-      currentLanguage = language;
     } catch (error) {
       console.error('Failed to save language to storage:', error);
     }
